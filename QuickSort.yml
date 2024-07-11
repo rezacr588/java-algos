@@ -1,0 +1,52 @@
+quick_sort_process:
+  initial_array: [10, 7, 8, 9, 1, 5]
+  steps:
+    - step: 1
+      array: [10, 7, 8, 9, 1, 5]
+      current_element: 10
+      pivot: 5
+      partition_index: -1
+      action: "10 > 5, no swap"
+    - step: 2
+      array: [10, 7, 8, 9, 1, 5]
+      current_element: 7
+      pivot: 5
+      partition_index: -1
+      action: "7 > 5, no swap"
+    - step: 3
+      array: [10, 7, 8, 9, 1, 5]
+      current_element: 8
+      pivot: 5
+      partition_index: -1
+      action: "8 > 5, no swap"
+    - step: 4
+      array: [10, 7, 8, 9, 1, 5]
+      current_element: 9
+      pivot: 5
+      partition_index: -1
+      action: "9 > 5, no swap"
+    - step: 5
+      array: [10, 7, 8, 9, 1, 5]
+      current_element: 1
+      pivot: 5
+      partition_index: 0
+      action: "1 < 5, swap 1 with 10"
+      new_array: [1, 7, 8, 9, 10, 5]
+    - step: 6
+      array: [1, 7, 8, 9, 10, 5]
+      pivot: 5
+      partition_index: 1
+      action: "swap 5 with 7"
+      new_array: [1, 5, 8, 9, 10, 7]
+  result:
+    array: [1, 5, 8, 9, 10, 7]
+    pivot_index: 1
+    left_subarray: [1]
+    right_subarray: [8, 9, 10, 7]
+  recursive_sorting:
+    left_subarray:
+      array: [1]
+      action: "Already sorted, no further action needed"
+    right_subarray:
+      array: [8, 9, 10, 7]
+      action: "Repeat partitioning process"
