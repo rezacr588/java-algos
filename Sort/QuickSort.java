@@ -1,3 +1,5 @@
+package Sort;
+
 public class QuickSort {
 
     // Function to perform QuickSort

@@ -1,3 +1,5 @@
+package Sort;
+
 public class MergeSort {
 
   // Main function that sorts an array using merge sort

@@ -1,3 +1,5 @@
+package Sort;
+
 public class InsertionSort {
 
   // Function to perform insertion sort on an array

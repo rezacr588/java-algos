@@ -1,3 +1,5 @@
+package Sort;
+
 public class BubbleSort {
 
   // Method to perform Bubble Sort
