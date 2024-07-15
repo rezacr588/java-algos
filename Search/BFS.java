@@ -59,6 +59,13 @@ class BFS {
     graph.addEdge(1, 4);
     graph.addEdge(2, 5);
 
+    // Define the Graph class
+    // 0
+    // / \
+    // 1 2
+    // / \ \
+    // 3 4 5
+
     System.out.println("BFS traversal starting from vertex 0:");
     graph.BFS(0); // Perform BFS starting from vertex 0
   }
