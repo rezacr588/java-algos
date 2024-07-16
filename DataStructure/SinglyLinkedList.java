@@ -1,7 +1,7 @@
-class LinkedList {
+public class SinglyLinkedList {
   private Node head;
 
-  // Inner class to represent a node in the linked list
+  // Inner class to represent a node in the singly linked list
   private static class Node {
     int data;
     Node next;
@@ -13,7 +13,7 @@ class LinkedList {
   }
 
   // Constructor to initialize an empty list
-  public LinkedList() {
+  public SinglyLinkedList() {
     this.head = null;
   }
 
@@ -77,8 +77,9 @@ class LinkedList {
     }
 
     // If key was not present in the list
-    if (current == null)
+    if (current == null) {
       return;
+    }
 
     // Unlink the node from the linked list
     previous.next = current.next;
@@ -156,30 +157,30 @@ class LinkedList {
     System.out.println();
   }
 
-  // Main method to demonstrate the usage of the linked list
+  // Main method to demonstrate the usage of the singly linked list
   public static void main(String[] args) {
-    LinkedList list = new LinkedList();
+    SinglyLinkedList list = new SinglyLinkedList();
     list.add(1);
     list.add(2);
     list.add(3);
-    list.printList(); // Output: 1 2 3
+    list.printList(); // Output: 1 -> 2 -> 3
 
     list.addFirst(0);
-    list.printList(); // Output: 0 1 2 3
+    list.printList(); // Output: 0 -> 1 -> 2 -> 3
 
     list.insertAt(2, 5);
-    list.printList(); // Output: 0 1 5 2 3
+    list.printList(); // Output: 0 -> 1 -> 5 -> 2 -> 3
 
     list.delete(2);
-    list.printList(); // Output: 0 1 5 3
+    list.printList(); // Output: 0 -> 1 -> 5 -> 3
 
     list.deleteAt(1);
-    list.printList(); // Output: 0 5 3
+    list.printList(); // Output: 0 -> 5 -> 3
 
     System.out.println("Size: " + list.size()); // Output: Size: 3
 
     list.reverse();
-    list.printList(); // Output: 3 5 0
+    list.printList(); // Output: 3 -> 5 -> 0
 
     System.out.println(list.search(5)); // Output: true
     System.out.println(list.search(10)); // Output: false
