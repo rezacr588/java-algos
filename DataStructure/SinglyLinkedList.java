@@ -163,7 +163,7 @@ public class SinglyLinkedList {
     list.add(1);
     list.add(2);
     list.add(3);
-    list.printList(); // Output: 1 -> 2 -> 3
+    list.printList(); // Output: 1 -> 2 -> 3 => 3 -> 2 -> 1
 
     list.addFirst(0);
     list.printList(); // Output: 0 -> 1 -> 2 -> 3
