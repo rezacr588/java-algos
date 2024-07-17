@@ -1,0 +1,55 @@
+stack_operations:
+  - operation: "push"
+    element: 1
+    before:
+      stack: []
+    after:
+      stack: [1]
+  - operation: "push"
+    element: 2
+    before:
+      stack: [1]
+    after:
+      stack: [1, 2]
+  - operation: "push"
+    element: 3
+    before:
+      stack: [1, 2]
+    after:
+      stack: [1, 2, 3]
+  - operation: "peek"
+    top_element: 3
+    before:
+      stack: [1, 2, 3]
+    after:
+      stack: [1, 2, 3]
+  - operation: "pop"
+    top_element: 3
+    before:
+      stack: [1, 2, 3]
+    after:
+      stack: [1, 2]
+  - operation: "isEmpty"
+    result: false
+    before:
+      stack: [1, 2]
+    after:
+      stack: [1, 2]
+  - operation: "pop"
+    top_element: 2
+    before:
+      stack: [1, 2]
+    after:
+      stack: [1]
+  - operation: "pop"
+    top_element: 1
+    before:
+      stack: [1]
+    after:
+      stack: []
+  - operation: "isEmpty"
+    result: true
+    before:
+      stack: []
+    after:
+      stack: []
