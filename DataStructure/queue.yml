@@ -1,0 +1,114 @@
+queue:
+  description: >
+    A queue is a linear data structure following the First-In-First-Out (FIFO) principle. 
+    Elements are added at the rear (enqueue) and removed from the front (dequeue).
+
+  classes:
+    Node:
+      description: Represents an element in the queue.
+      properties:
+        - data: Contains the value of the node.
+        - next: Points to the next node in the queue.
+      methods:
+        - Node(data):
+            description: Constructor that initializes the node with data and sets next to null.
+
+    CustomQueue:
+      description: Manages the queue operations using the Node class.
+      properties:
+        - front: Points to the first node in the queue.
+        - rear: Points to the last node in the queue.
+        - size: Keeps track of the number of elements in the queue.
+      methods:
+        - enqueue(data):
+            description: Adds a new element to the rear of the queue.
+            steps:
+              - Create a new node with the provided data.
+              - If the queue is empty:
+                - Set both front and rear to the new node.
+              - Else:
+                - Link the new node to the end of the queue.
+                - Update the rear to the new node.
+              - Increment the size of the queue.
+
+        - dequeue():
+            description: Removes and returns the front element of the queue.
+            steps:
+              - Check if the queue is empty:
+                - If empty, throw an exception.
+              - Retrieve data from the front node.
+              - Update the front to the next node.
+              - If the queue becomes empty:
+                - Set the rear to null.
+              - Decrement the size of the queue.
+
+        - peek():
+            description: Returns the front element without removing it.
+            steps:
+              - Check if the queue is empty:
+                - If empty, throw an exception.
+              - Return data from the front node.
+
+        - isEmpty():
+            description: Checks if the queue is empty.
+            steps:
+              - Return true if the front is null.
+
+        - size():
+            description: Returns the number of elements in the queue.
+            steps:
+              - Return the size property.
+
+        - printQueue():
+            description: Prints all elements in the queue.
+            steps:
+              - Iterate through the nodes from front to rear.
+              - Print the data of each node.
+
+  main:
+    description: Demonstrates the usage of the CustomQueue class.
+    steps:
+      - Create an instance of CustomQueue with Integer type.
+      - Enqueue elements 1, 2, and 3.
+      - Print the queue.
+      - Peek at the front element.
+      - Dequeue an element and print it.
+      - Print the queue after dequeue operation.
+      - Print the size of the queue.
+
+  example:
+    description: >
+      Below is a real example demonstrating the queue operations with actual elements.
+    operations:
+      - Initialize the queue:
+          queue: []
+
+      - Enqueue 1:
+          action: Add 1 to the rear of the queue.
+          queue: [1]
+
+      - Enqueue 2:
+          action: Add 2 to the rear of the queue.
+          queue: [1, 2]
+
+      - Enqueue 3:
+          action: Add 3 to the rear of the queue.
+          queue: [1, 2, 3]
+
+      - Peek:
+          action: View the front element without removing it.
+          front_element: 1
+          queue: [1, 2, 3]
+
+      - Dequeue:
+          action: Remove and return the front element.
+          removed_element: 1
+          queue: [2, 3]
+
+      - Print queue:
+          action: Print all elements in the queue.
+          queue: [2, 3]
+
+      - Queue size:
+          action: Return the number of elements in the queue.
+          size: 2
