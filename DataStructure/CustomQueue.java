@@ -1,12 +1,3 @@
-class Node<T> {
-  T data;
-  Node<T> next;
-
-  public Node(T data) {
-    this.data = data;
-    this.next = null;
-  }
-}
 
 public class CustomQueue<T> {
   private Node<T> front;
@@ -17,6 +8,16 @@ public class CustomQueue<T> {
     this.front = null;
     this.rear = null;
     this.size = 0;
+  }
+
+  class Node<T> {
+    T data;
+    Node<T> next;
+
+    public Node(T data) {
+      this.data = data;
+      this.next = null;
+    }
   }
 
   // Add an element to the rear of the queue
