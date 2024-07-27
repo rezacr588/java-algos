@@ -1,0 +1,171 @@
+AVL_Tree:
+  Description: >
+    An AVL tree is a self-balancing binary search tree named after its inventors Adelson-Velsky and Landis.
+    It maintains a balanced structure to ensure that the height of the tree remains O(log n), providing
+    efficient operations for insertion, deletion, and lookup.
+  
+  Key_Concepts:
+    Balance_Factor: >
+      For each node, the balance factor is the difference between the heights of the left and right subtrees.
+      Balance Factor = Height of Left Subtree - Height of Right Subtree.
+      The tree is balanced if the balance factor of each node is -1, 0, or 1.
+  
+  Rotations:
+    Description: >
+      Rotations are used to rebalance the tree when nodes are inserted or deleted.
+      There are four types of rotations:
+      - Left Rotation (LL)
+      - Right Rotation (RR)
+      - Left-Right Rotation (LR)
+      - Right-Left Rotation (RL)
+  
+  Operations:
+    Insertion:
+      Steps:
+        - Perform a standard BST insertion.
+        - Update the height of the ancestor nodes.
+        - Check the balance factor of the nodes.
+        - Apply appropriate rotations to balance the tree.
+      Explanation:
+        - After inserting a new node, the height of the affected nodes is updated.
+        - The balance factor is checked to see if any node is unbalanced.
+        - If a node is unbalanced, the appropriate rotation is performed to restore balance.
+  
+    Deletion:
+      Steps:
+        - Perform a standard BST deletion.
+        - Update the height of the ancestor nodes.
+        - Check the balance factor of the nodes.
+        - Apply appropriate rotations to balance the tree.
+      Explanation:
+        - After deleting a node, the height of the affected nodes is updated.
+        - The balance factor is checked to see if any node is unbalanced.
+        - If a node is unbalanced, the appropriate rotation is performed to restore balance.
+  
+  Examples:
+    Insertion:
+      Nodes: [10, 20, 30, 40, 50, 25]
+      Visualizations:
+        Step_1: |
+          Insert 10:
+            10
+          Explanation: Insert 10 as the root node since the tree is empty.
+  
+        Step_2: |
+          Insert 20:
+            10
+              \
+              20
+          Explanation: Insert 20 as the right child of 10.
+  
+        Step_3: |
+          Insert 30:
+            10
+              \
+              20
+                \
+                30
+          Explanation: Insert 30 as the right child of 20.
+          Balance factor of 10 is -2 (unbalanced), perform left rotation at 10:
+            20
+           /  \
+         10    30
+          Explanation: The tree becomes unbalanced with a balance factor of -2 at node 10, so a left rotation is performed at 10.
+  
+        Step_4: |
+          Insert 40:
+            20
+           /  \
+         10    30
+                 \
+                 40
+          Explanation: Insert 40 as the right child of 30.
+  
+        Step_5: |
+          Insert 50:
+            20
+           /  \
+         10    30
+                 \
+                 40
+                   \
+                   50
+          Explanation: Insert 50 as the right child of 40.
+          Balance factor of 30 is -2 (unbalanced), perform left rotation at 30:
+            20
+           /  \
+         10    40
+               / \
+             30  50
+          Explanation: The tree becomes unbalanced with a balance factor of -2 at node 30, so a left rotation is performed at 30.
+  
+        Step_6: |
+          Insert 25:
+            20
+           /  \
+         10    40
+               / \
+             30  50
+            /
+          25
+          Explanation: Insert 25 as the left child of 30.
+          Balance factor of 40 is 2 (unbalanced), perform right-left rotation at 40:
+            Right rotation at 30:
+              20
+             /  \
+           10    40
+                 / \
+               25  50
+                 \
+                30
+            Explanation: Perform a right rotation at 30, making 25 the right child of 20 and 30 the right child of 25.
+            Left rotation at 40:
+              20
+             /  \
+           10    25
+                 / \
+               20  50
+            Explanation: Perform a left rotation at 40, making 25 the right child of 20 and 50 the right child of 40.
+  
+  Rotations_In_Detail:
+    Left_Rotation_LL: |
+      z                                      y 
+     / \                                   /   \
+    T1   y      Left Rotate (z)          z      x
+        /  \   - - - - - - - - ->      /  \    /  \
+       T2   x                        T1   T2  T3   T4
+           /  \
+         T3   T4
+      Explanation: Perform a left rotation at node z. y becomes the new root, z becomes the left child of y, and x becomes the right child of y.
+  
+    Right_Rotation_RR: |
+        z                                      y 
+       / \                                   /   \
+      y   T4     Right Rotate(z)          x      z
+     /  \       - - - - - - - - ->      /  \    /  \
+    x   T3                            T1   T2  T3   T4
+   /  \
+  T1   T2
+      Explanation: Perform a right rotation at node z. y becomes the new root, z becomes the right child of y, and x becomes the left child of y.
+  
+    Left_Right_Rotation_LR: |
+      z                               z                           x
+     / \                            /   \                        /  \
+    x   T4  Left Rotate (x)      x      T4  Right Rotate(z)    y      z
+       /  \   - - - - - - - ->  /  \    - - - - - - - - ->    /  \   /  \
+      T1   y                   T1   x                      T1   T2 T3   T4
+         /  \                     /  \
+        T2   T3                  T2   y
+                                     /  \
+                                   T3   T4
+      Explanation: Perform a left rotation at node x, making y the right child of z. Then perform a right rotation at node z, making x the new root.
+  
+    Right_Left_Rotation_RL: |
+      z                            z                            x
+     / \                         /  \                          /  \
+    T1   y    Right Rotate(y)   T1    x     Left Rotate(z)   z      y
+       /  \   - - - - - - - ->      /  \   - - - - - - - ->  / \    / \
+      x    T4                      y    T4                  T1  T2 T3  T4
+     /  \                       /  \
+    T2   T3                    T2   T3
+      Explanation: Perform a right rotation at node y, making x the right child of z. Then perform a left rotation at node z, making x the new root.
