@@ -236,8 +236,8 @@ class AVLTree {
       //       30
       //      /  \
       //    20   40
-      //   /  \     \
-      //  10  25    50
+      //   /  \    \
+      //  10  25   50
       System.out.println("Preorder traversal of constructed tree is : ");
       tree.preOrder(tree.root);
 

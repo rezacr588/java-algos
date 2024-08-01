@@ -1,0 +1,95 @@
+RedBlackTree:
+  description: >
+    A Red-Black Tree is a balanced binary search tree with the following properties:
+    - Each node is either red or black.
+    - The root is black.
+    - All leaves (NIL nodes) are black.
+    - Red nodes cannot have red children (no two consecutive red nodes).
+    - Every path from a given node to its descendant NIL nodes contains the same number of black nodes.
+
+  operations:
+    - name: insert
+      description: >
+        Inserts a new node with the given data into the Red-Black Tree. The tree is restructured and recolored
+        to maintain its properties after the insertion.
+      steps:
+        - Create a new node with the given data and color it red.
+        - If the tree is empty, set the new node as the root and color it black.
+        - Otherwise, insert the node using the binary search tree insertion logic.
+        - Fix the tree to maintain Red-Black properties by recoloring and rotating as necessary.
+
+    - name: fixInsertion
+      description: >
+        Fixes the Red-Black Tree properties after inserting a new node.
+      steps:
+        - While the current node is not the root and its parent is red:
+            - If the parent is the left child of the grandparent:
+                - If the uncle is red, recolor the parent, uncle, and grandparent.
+                - If the uncle is black, and the current node is the right child, rotate left.
+                - Rotate right around the grandparent and recolor.
+            - If the parent is the right child of the grandparent:
+                - If the uncle is red, recolor the parent, uncle, and grandparent.
+                - If the uncle is black, and the current node is the left child, rotate right.
+                - Rotate left around the grandparent and recolor.
+        - Ensure the root is black.
+
+    - name: rotateLeft
+      description: >
+        Performs a left rotation around the given node. This operation changes the structure of the tree and
+        is used to maintain balance.
+      steps:
+        - Set the right child of the node as the new parent of the node.
+        - Move the left child of the new parent to be the right child of the original node.
+        - Update the parent pointers of the involved nodes.
+
+    - name: rotateRight
+      description: >
+        Performs a right rotation around the given node. This operation changes the structure of the tree and
+        is used to maintain balance.
+      steps:
+        - Set the left child of the node as the new parent of the node.
+        - Move the right child of the new parent to be the left child of the original node.
+        - Update the parent pointers of the involved nodes.
+
+    - name: search
+      description: >
+        Searches for a node with the given data in the Red-Black Tree.
+      steps:
+        - Start from the root and traverse the tree:
+            - If the current node's data matches the search data, return true.
+            - If the search data is less than the current node's data, move to the left child.
+            - If the search data is greater than the current node's data, move to the right child.
+        - If the data is not found, return false.
+
+    - name: inorderTraversal
+      description: >
+        Performs an inorder traversal of the tree, printing the data of each node. This traversal method
+        visits nodes in the order: left subtree, root, right subtree.
+      steps:
+        - Recursively visit the left subtree.
+        - Print the data of the current node.
+        - Recursively visit the right subtree.
+
+  examples:
+    - name: Insertion and Traversal Example
+      description: >
+        An example demonstrating the insertion of multiple nodes and performing an inorder traversal.
+      code: |
+        public static void main(String[] args) {
+            RedBlackTree tree = new RedBlackTree();
+
+            // Insert nodes into the tree
+            int[] values = {20, 15, 25, 10, 5, 1, 30};
+            for (int value : values) {
+                tree.insert(value);
+            }
+
+            // Perform an inorder traversal of the tree
+            System.out.println("Inorder traversal of the Red-Black Tree:");
+            tree.inorderTraversal();
+            System.out.println();
+
+            // Search for a node in the tree
+            int searchValue = 15;
+            System.out.println("Searching for " + searchValue + ": " + tree.search(searchValue));
+        }
