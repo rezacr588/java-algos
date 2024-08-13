@@ -1,213 +1,163 @@
+class Node {
+  int data;
+  Node parent;
+  Node left;
+  Node right;
+  boolean color; // true for Red, false for Black
+
+  Node(int data) {
+    this.data = data;
+    this.parent = null;
+    this.left = null;
+    this.right = null;
+    this.color = true; // New nodes are typically red
+  }
+}
+
 class RedBlackTree {
+  private Node root;
 
-  private static final boolean RED = true; // Constant to represent the color red
-  private static final boolean BLACK = false; // Constant to represent the color black
-
-  // Node class to represent each node in the Red-Black Tree
-  private class Node {
-    int data;
-    Node left, right, parent;
-    boolean color;
-
-    // Constructor to create a new node
-    Node(int data) {
-      this.data = data;
-      this.color = RED; // New nodes are always red initially
+  // Left Rotation
+  void leftRotate(Node x) {
+    Node y = x.right; // Set y
+    x.right = y.left; // Turn y's left subtree into x's right subtree
+    if (y.left != null) {
+      y.left.parent = x;
     }
-  }
-
-  private Node root = null; // Root of the Red-Black Tree
-
-  // Method to insert a new node with the given data
-  public void insert(int data) {
-    Node newNode = new Node(data);
-    if (root == null) {
-      root = newNode;
-      root.color = BLACK; // Root is always black
+    y.parent = x.parent; // Link x's parent to y
+    if (x.parent == null) {
+      root = y; // y becomes root
+    } else if (x == x.parent.left) {
+      x.parent.left = y;
     } else {
-      root = insert(root, newNode);
-      fixInsertion(newNode);
+      x.parent.right = y;
     }
+    y.left = x; // Put x on y's left
+    x.parent = y;
   }
 
-  // Helper method to insert a node in the BST manner
-  private Node insert(Node root, Node newNode) {
-    if (root == null) {
-      return newNode;
+  // Right Rotation
+  void rightRotate(Node y) {
+    Node x = y.left; // Set x
+    y.left = x.right; // Turn x's right subtree into y's left subtree
+    if (x.right != null) {
+      x.right.parent = y;
     }
-
-    if (newNode.data < root.data) {
-      root.left = insert(root.left, newNode);
-      root.left.parent = root;
-    } else if (newNode.data > root.data) {
-      root.right = insert(root.right, newNode);
-      root.right.parent = root;
-    }
-
-    return root;
-  }
-
-  // Method to fix the Red-Black Tree properties after insertion
-  private void fixInsertion(Node node) {
-    Node parent, grandParent;
-
-    while (node != root && node.color == RED && node.parent.color == RED) {
-      parent = node.parent;
-      grandParent = parent.parent;
-
-      // Case when parent is the left child of grandparent
-      if (parent == grandParent.left) {
-        Node uncle = grandParent.right;
-
-        // Case when uncle is red (recoloring)
-        if (uncle != null && uncle.color == RED) {
-          grandParent.color = RED;
-          parent.color = BLACK;
-          uncle.color = BLACK;
-          node = grandParent;
-        } else {
-          // Case when node is the right child (left rotation)
-          if (node == parent.right) {
-            rotateLeft(parent);
-            node = parent;
-            parent = node.parent;
-          }
-
-          // Case when node is the left child (right rotation)
-          rotateRight(grandParent);
-          boolean temp = parent.color;
-          parent.color = grandParent.color;
-          grandParent.color = temp;
-          node = parent;
-        }
-      } else {
-        // Case when parent is the right child of grandparent
-        Node uncle = grandParent.left;
-
-        // Case when uncle is red (recoloring)
-        if (uncle != null && uncle.color == RED) {
-          grandParent.color = RED;
-          parent.color = BLACK;
-          uncle.color = BLACK;
-          node = grandParent;
-        } else {
-          // Case when node is the left child (right rotation)
-          if (node == parent.left) {
-            rotateRight(parent);
-            node = parent;
-            parent = node.parent;
-          }
-
-          // Case when node is the right child (left rotation)
-          rotateLeft(grandParent);
-          boolean temp = parent.color;
-          parent.color = grandParent.color;
-          grandParent.color = temp;
-          node = parent;
-        }
-      }
-    }
-
-    root.color = BLACK; // Ensure the root is always black
-  }
-
-  // Method to perform a left rotation around a given node
-  private void rotateLeft(Node node) {
-    Node rightChild = node.right;
-    node.right = rightChild.left;
-
-    if (node.right != null) {
-      node.right.parent = node;
-    }
-
-    rightChild.parent = node.parent;
-
-    if (node.parent == null) {
-      root = rightChild;
-    } else if (node == node.parent.left) {
-      node.parent.left = rightChild;
+    x.parent = y.parent; // Link y's parent to x
+    if (y.parent == null) {
+      root = x; // x becomes root
+    } else if (y == y.parent.left) {
+      y.parent.left = x;
     } else {
-      node.parent.right = rightChild;
+      y.parent.right = x;
     }
-
-    rightChild.left = node;
-    node.parent = rightChild;
+    x.right = y; // Put y on x's right
+    y.parent = x;
   }
 
-  // Method to perform a right rotation around a given node
-  private void rotateRight(Node node) {
-    Node leftChild = node.left;
-    node.left = leftChild.right;
+  // Example 1: Performing Left Rotation
+  public void example1() {
+    Node node10 = new Node(10); // Root
+    Node node20 = new Node(20); // Right child of 10
+    Node node30 = new Node(30); // Right child of 20
 
-    if (node.left != null) {
-      node.left.parent = node;
-    }
+    node10.right = node20;
+    node20.parent = node10;
+    node20.right = node30;
+    node30.parent = node20;
 
-    leftChild.parent = node.parent;
+    // Tree before rotation:
+    // 10B
+    // \
+    // 20R
+    // \
+    // 30R
 
-    if (node.parent == null) {
-      root = leftChild;
-    } else if (node == node.parent.left) {
-      node.parent.left = leftChild;
-    } else {
-      node.parent.right = leftChild;
-    }
+    leftRotate(node10);
 
-    leftChild.right = node;
-    node.parent = leftChild;
+    // Tree after rotation:
+    // 20R
+    // / \
+    // 10B 30R
   }
 
-  // Method to search for a node with given data
-  public boolean search(int data) {
-    return search(root, data);
+  // Example 2: Performing Right Rotation
+  public void example2() {
+    Node node30 = new Node(30); // Root
+    Node node20 = new Node(20); // Left child of 30
+    Node node10 = new Node(10); // Left child of 20
+
+    node30.left = node20;
+    node20.parent = node30;
+    node20.left = node10;
+    node10.parent = node20;
+
+    // Tree before rotation:
+    // 30B
+    // /
+    // 20R
+    // /
+    // 10R
+
+    rightRotate(node30);
+
+    // Tree after rotation:
+    // 20R
+    // / \
+    // 10R 30B
   }
 
-  // Helper method for searching a node
-  private boolean search(Node root, int data) {
-    if (root == null) {
-      return false; // Node not found
-    }
+  // Example 3: Performing Left-Right Rotation
+  public void example3() {
+    Node node30 = new Node(30); // Root
+    Node node10 = new Node(10); // Left child of 30
+    Node node20 = new Node(20); // Right child of 10
 
-    if (data < root.data) {
-      return search(root.left, data); // Search in the left subtree
-    } else if (data > root.data) {
-      return search(root.right, data); // Search in the right subtree
-    } else {
-      return true; // Node found
-    }
+    node30.left = node10;
+    node10.parent = node30;
+    node10.right = node20;
+    node20.parent = node10;
+
+    // Tree before rotations:
+    // 30B
+    // /
+    // 10R
+    // \
+    // 20R
+
+    leftRotate(node10);
+    rightRotate(node30);
+
+    // Tree after rotations:
+    // 20R
+    // / \
+    // 10R 30B
   }
 
-  // Method to perform an inorder traversal of the tree
-  public void inorderTraversal() {
-    inorderTraversal(root);
-  }
+  // Example 4: Performing Right-Left Rotation
+  public void example4() {
+    Node node10 = new Node(10); // Root
+    Node node30 = new Node(30); // Right child of 10
+    Node node20 = new Node(20); // Left child of 30
 
-  // Helper method for inorder traversal
-  private void inorderTraversal(Node root) {
-    if (root != null) {
-      inorderTraversal(root.left);
-      System.out.print(root.data + " ");
-      inorderTraversal(root.right);
-    }
-  }
+    node10.right = node30;
+    node30.parent = node10;
+    node30.left = node20;
+    node20.parent = node30;
 
-  // Main method for testing the Red-Black Tree
-  public static void main(String[] args) {
-    RedBlackTree tree = new RedBlackTree();
+    // Tree before rotations:
+    // 10B
+    // \
+    // 30R
+    // /
+    // 20R
 
-    // Insert nodes into the tree
-    int[] values = { 20, 15, 25, 10, 5, 1, 30 };
-    for (int value : values) {
-      tree.insert(value);
-    }
+    rightRotate(node30);
+    leftRotate(node10);
 
-    // Perform an inorder traversal of the tree
-    System.out.println("Inorder traversal of the Red-Black Tree:");
-    tree.inorderTraversal();
-    System.out.println();
-
-    // Search for a node in the tree
-    int searchValue = 15;
-    System.out.println("Searching for " + searchValue + ": " + tree.search(searchValue));
+    // Tree after rotations:
+    // 20R
+    // / \
+    // 10B 30R
   }
 }
